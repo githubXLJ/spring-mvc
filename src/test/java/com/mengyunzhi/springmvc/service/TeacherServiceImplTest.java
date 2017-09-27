@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+// import static :导入的类为静态类，在本测试用例中只导入一次
+import static org.assertj.core.api.Assertions.assertThat;
+
 import javax.persistence.EntityNotFoundException;
 /**
  * Created by xulinjie on 2017/9/24.
@@ -65,5 +68,74 @@ public class TeacherServiceImplTest {
 
         // 使用张三的数据来更新0号教师的数据
         teacherService.saveTeacher(id, teacherZhangsan);
+    }
+
+    @Test
+    public void deleteTeacherTest() {
+        // 实例化教师 李四
+        Teacher teacherLisi = new Teacher("lisi",
+                "lisi@email.com",
+                "scse of hebut",
+                false);
+
+        // 保存李四至数据库
+        teacherLisi = teacherRepository.save(teacherLisi);
+        System.out.println(teacherLisi);    // 打印插入的数据
+
+        // 执行删除操作
+        teacherService.deleteTeacher(teacherLisi);
+
+        // 数据查找，看数据是否进行了删除
+        Teacher teacher = teacherRepository.findOne(teacherLisi.getId());
+        System.out.println(teacher);
+    }
+
+    @Test
+    public void deleteTeacherByIdTest() {
+        // 实例化教师 李四
+        Teacher teacherLisi = new Teacher("lisi",
+                "lisi@email.com",
+                "scse of hebut",
+                false);
+
+        // 保存李四至数据库
+        teacherLisi = teacherRepository.save(teacherLisi);
+        System.out.println(teacherLisi);
+
+        // 删除关键字对应的实体
+        teacherService.deleteTeacherById(teacherLisi.getId());
+
+        // 数据查找，看数据是否进行了删除
+        Teacher teacher = teacherRepository.findOne(teacherLisi.getId());
+        System.out.println(teacher);
+
+    }
+
+    @Test
+    public void unitDeleteTest() {
+        // 实例化教师 李四
+        Teacher teacherLisi = new Teacher("lisi",
+                "lisi@email.com",
+                "scse of hebut",
+                false);
+
+        // 断言新增教程的ID为null
+        assertThat(teacherLisi.getId()).isNull();
+
+        // 保存李四至数据库
+        teacherLisi = teacherRepository.save(teacherLisi);
+
+        // 断言李四的id不是null
+        assertThat(teacherLisi.getId()).isNotNull();
+        // 断方李的ID大于0
+        assertThat(teacherLisi.getId()).isNotZero();
+
+        // 删除关键字对应的实体
+        teacherService.deleteTeacherById(teacherLisi.getId());
+
+        // 数据查找，看数据是否进行了删除
+        Teacher teacher = teacherRepository.findOne(teacherLisi.getId());
+        // 断言查询到的实体结果为null
+        assertThat(teacher).isNull();
     }
 }

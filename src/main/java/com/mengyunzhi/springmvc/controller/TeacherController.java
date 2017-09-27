@@ -1,6 +1,7 @@
 package com.mengyunzhi.springmvc.controller;
 
 import com.mengyunzhi.springmvc.repository.Teacher;
+import com.mengyunzhi.springmvc.service.TeacherService;
 import com.mengyunzhi.springmvc.repository.TeacherRepository;
 import com.mengyunzhi.springmvc.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,13 @@ public class TeacherController {
         //数据转发
         return teacherService.saveTeacher(id, teacher);
 
+    }
+
+    // @DeleteMapping 表明该方法只接收 delete 请求.
+    @DeleteMapping("/{id}")
+    public void deleteTeacher(@PathVariable Long id) {
+        Teacher teacher = teacherRepository.findOne(id);
+        teacherService.deleteTeacher(teacher);
+        return;
     }
 }
