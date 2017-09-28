@@ -1,11 +1,12 @@
 package com.mengyunzhi.springmvc.repository;
 
 import javax.persistence.*;
-import com.mengyunzhi.springmvc.repository.Teacher;
 
 /**
  * Created by xulinjie on 2017-9-28.
  */
+// 使用@Entity 来说明该类对应一个数据表
+@Entity
 public class Klass {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO) private Long id;
@@ -15,8 +16,10 @@ public class Klass {
 
     private String name;        // 名称
 
-    public Klass(Teacher teacher) {
+
+    public Klass(Teacher teacher, String name) {
         this.teacher = teacher;
+        this.name = name;
     }
 
     public Klass() {
