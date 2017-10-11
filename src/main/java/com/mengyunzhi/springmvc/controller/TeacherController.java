@@ -3,7 +3,6 @@ package com.mengyunzhi.springmvc.controller;
 import com.mengyunzhi.springmvc.repository.Teacher;
 import com.mengyunzhi.springmvc.service.TeacherService;
 import com.mengyunzhi.springmvc.repository.TeacherRepository;
-import com.mengyunzhi.springmvc.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
