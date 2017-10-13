@@ -3,6 +3,7 @@ package com.mengyunzhi.springmvc.service;
 import com.mengyunzhi.springmvc.repository.Klass;
 import com.mengyunzhi.springmvc.repository.Teacher;
 import com.mengyunzhi.springmvc.repository.TeacherRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,22 @@ public class KlassServiceTest {
     private TeacherRepository teacherRepository;
     @Autowired
     private KlassService klassService;
+    @Autowired
+    private Klass klass;
 
+    @Before
+    public void before() {
+        // 新增教师
+        Teacher teacher = new Teacher(
+                "zhangsan",
+                "zhangsan@yunzhiclub.com",
+                "scse of hebut",
+                true);
+        teacherRepository.save(teacher);
 
+        // 新增班级
+        klass = klassService.add("软件班", teacher.getId());
+    }
     @Test
     public void add() throws Exception {
         // 新增教师
@@ -64,10 +79,34 @@ public class KlassServiceTest {
 
     @Test
     public void delete() throws Exception {
+        // 查询实体，断言其存在
+        assertThat(klass).isNotNull();
+
+        // 将实体删除
+        klassService.delete(klass.getId());
+
+        // 查询实体，断言其不存在
+        assertThat(klassService.get(klass.getId())).isNull();
     }
 
     @Test
     public void update() throws Exception {
+        // 新建一个教师实体
+        Teacher teacher = new Teacher(
+                "zhangsan",
+                "zhangsan@yunzhiclub.com",
+                "scse of hebut",
+                true);
+        teacherRepository.save(teacher);
+
+        // 更新
+        String name = "软件工程";
+        klassService.update(klass.getId(), name, teacher.getId());
+
+        // 查询, 并断言
+        Klass newKlass = klassService.get(klass.getId());
+        assertThat(newKlass.getName()).isEqualTo(name);
+        assertThat(newKlass.getTeacher().getId()).isEqualTo(teacher.getId());
     }
 
 }

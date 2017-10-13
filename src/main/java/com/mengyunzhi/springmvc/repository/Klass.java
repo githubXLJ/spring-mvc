@@ -1,5 +1,7 @@
 package com.mengyunzhi.springmvc.repository;
 
+import org.springframework.stereotype.Service;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +9,7 @@ import javax.persistence.*;
  */
 // 使用@Entity 来说明该类对应一个数据表
 @Entity
+@Service
 public class Klass {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO) private Long id;
@@ -22,7 +25,16 @@ public class Klass {
         this.name = name;
     }
 
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
     public Klass() {
+
     }
 
     public Long getId() {

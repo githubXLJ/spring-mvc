@@ -28,16 +28,23 @@ public class KlassServiceImpl implements KlassService {
 
     @Override
     public Klass get(Long id) {
-        return null;
+        Klass klass = klassRepository.findOne(id);
+        return klass;
     }
 
     @Override
     public void delete(Long id) {
-
+        klassRepository.delete(id);
     }
 
     @Override
     public Klass update(Long id, String name, Long teacherId) {
-        return null;
+        //
+        Teacher teacher = teacherRepository.findOne(teacherId);
+        Klass klass = klassRepository.findOne(id);
+        klass.setTeacher(teacher);
+        klass.setName(name);
+        klassRepository.save(klass);
+        return klass;
     }
 }
