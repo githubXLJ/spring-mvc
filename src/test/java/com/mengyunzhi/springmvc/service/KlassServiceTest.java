@@ -109,4 +109,9 @@ public class KlassServiceTest {
         assertThat(newKlass.getTeacher().getId()).isEqualTo(teacher.getId());
     }
 
+    @Test
+    public void getNewKlass() {
+        assertThat(klassService.getNewKlass()).isNotNull();
+    }
+
 }

@@ -38,4 +38,15 @@ public class TeacherServiceImpl implements TeacherService {
         teacherRepository.delete(id);
         return;
     }
+
+    @Override
+    public Teacher getNewTeacher() {
+        Teacher teacher = new Teacher(
+                "示例教师",
+                "zhangsan@yunzhiclub.com",
+                "scse of hebut",
+                true);
+        teacherRepository.save(teacher);
+        return teacher;
+    }
 }

@@ -10,4 +10,5 @@ public interface KlassService {
     Klass get(Long id);
     void  delete(Long id);
     Klass update(Long id, String name, Long teacherId);
+    Klass getNewKlass();    // 获取一个新的教师实例
 }
